@@ -1,0 +1,50 @@
+/* Base Application Styles */
+
+figure, section {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+
+  background-color: #222;
+}
+
+.app {
+  height: 100%;
+  width: 100%;
+}
+
+/* sec-gallery -start */
+.sec-gallery {
+  position: relative;
+
+  width: 100%;
+  height: 680px;
+}
+/* sec-gallery -end*/
+
+/* gallery-images -start*/
+.gallery-images {
+  overflow: hidden;
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+  background-color: #ddd;
+}
+/* gallery-images -end*/
+
+/* gallery-nav -start */
+.gallery-nav {
+  z-index: 100;
+  position: absolute;
+  left: 0;
+  bottom: 30px;
+
+  width: 100%;
+  text-align: center; 
+}
+/* gallery-nav -end */
