@@ -28,6 +28,10 @@ function getDefaultModules() {
         test: /\.css$/,
         loader: 'style-loader!css-loader!postcss-loader'
       },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      },
       // 20171209
       // {
       //   test: /\.sass/,
