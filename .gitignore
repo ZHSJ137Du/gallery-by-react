@@ -33,5 +33,4 @@ bower_components/
 .idea
 
 #App specific
-dist
 *.md
