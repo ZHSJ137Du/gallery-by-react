@@ -83,9 +83,9 @@ class ImgFigure extends React.Component {
 
         // 设置旋转角度
         if (this.props.imgArrange.rotate) {
-            let browserPre = ['O', 'Ms', 'Webkit', ''];
+            let browserPre = ['MOZTransform', 'MsTransform', 'WebkitTransform', 'transform'];
             browserPre.forEach(function(value) {
-                styleObj[value + 'Transform'] = 'rotate(' +
+                styleObj[value] = 'rotate(' +
                     this.props.imgArrange.rotate + 'deg)';
             }.bind(this));
         }
@@ -122,6 +122,48 @@ class ImgFigure extends React.Component {
     }
 }
 
+
+// 导航控制组件
+class NavControllerUnit extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(e) {
+
+        // 如果点击的为当前居中的图片，则翻转图片，否则居中图片
+        if (this.props.imgArrange.isCenter) {
+            this.props.inverse();
+        } else {
+            this.props.center();
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    render() {
+
+        let navCUnitClassName = 'nav-controller-unit';
+
+        // 图片居中时，放大控制单元比例
+        if (this.props.imgArrange.isCenter) {
+            navCUnitClassName += ' is-center';
+
+            // 如果同时对应为翻转时，改变控制单元旋转箭头
+            if (this.props.imgArrange.isInverse) {
+                navCUnitClassName += ' is-inverse';
+            }
+        }
+
+        return (
+            <span className={navCUnitClassName} onClick={this.handleClick}></span>
+        );
+    }
+}
 
 // 处理一切数据，及状态转换
 class AppComponent extends React.Component {
@@ -287,7 +329,7 @@ class AppComponent extends React.Component {
             });
 
             // 布局左右两侧图片
-            for (let i = 0, j = imgArrangeArr.length - 1, k = j / 2; i < j; i++) {
+            for (let i = 0, j = imgArrangeArr.length - 1, k = j / 2; i <= j; i++) {
                 // 左区域 或右区域的水平x取值范围
                 let hPostRangeLORX = null;
 
@@ -324,7 +366,7 @@ class AppComponent extends React.Component {
 
     render() {
       
-        let galleryNavUnit = [],
+        let navControllerUnit = [],
             imgFigure = [];
 
         // 传子组件使用：this.props.data
@@ -345,8 +387,16 @@ class AppComponent extends React.Component {
             imgFigure.push(
                 <ImgFigure key = {index}
                     imgArrange = {this.state.imgArrangeArr[index]}
-                    ref = {(ref) => this['imgFigure' + index] = ref }
+                    ref = {(ref) => {this['imgFigure' + index] = ref;}}
                     data = {value}
+                    inverse = {this.inverse(index)}
+                    center = {this.center(index)}
+                />
+            );
+
+            navControllerUnit.push(
+                <NavControllerUnit key = {index}
+                    imgArrange = {this.state.imgArrangeArr[index]}
                     inverse = {this.inverse(index)}
                     center = {this.center(index)}
                 />
@@ -361,7 +411,7 @@ class AppComponent extends React.Component {
                     {imgFigure}
                 </section>
                 <nav className="gallery-nav">
-                    {galleryNavUnit}
+                    {navControllerUnit}
                 </nav>
             </section>
         );

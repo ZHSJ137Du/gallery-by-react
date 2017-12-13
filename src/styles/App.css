@@ -1,4 +1,14 @@
 /* Base Application Styles */
+@charset "utf-8";
+
+@font-face {
+  font-family: "icons-turn-arrow"; /*命名*/
+  src: url("../fonts/icons/iconfont.eot") format("embedded-opentype"),
+       url("../fonts/icons/iconfont.woff") format("woff"),
+       url("../fonts/icons/iconfont.ttf") format("truetype"),
+       url("../fonts/icons/iconfont.svg") format("svg");
+
+}
 
 figure, section {
   margin: 0;
@@ -89,8 +99,8 @@ html, body {
   height: 100%;
   box-sizing: border-box;
   background: #555;
-
-  transform: rotateY(-180deg);
+  /*firefox 15 img会覆盖此内容 需要再往Z上移动1px*/
+  transform: rotateY(-180deg) translateZ(1px);
   backface-visibility: hidden;  /*重要*/
   transform-style: preserve-3d;
 }
@@ -106,5 +116,49 @@ html, body {
 
   width: 100%;
   text-align: center; 
+}
+
+.gallery-nav .nav-controller-unit {
+  
+  display: inline-block;
+  margin: 0 5px;
+  width: 30px;
+  height: 30px;
+
+  background-color: #aaa;
+  border-radius: 50%;
+
+  text-align: center;
+  cursor: pointer;
+
+  transform: scale(.5);
+
+}
+
+.gallery-nav .is-center {
+  background-color: #666;
+  transform: scale(1); 
+  transition: transform .6s ease-in-out, background-color .3s ease;
+}
+
+.gallery-nav .nav-controller-unit::after {
+  font-family: "icons-turn-arrow";
+  content: "\e605";
+
+  line-height: 30px;
+  vertical-align: middle;
+  color: #fff;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.gallery-nav .is-inverse {
+  
+  transform: rotateY(180deg);
+  transition: transform .3s ease-in-out;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 /* gallery-nav -end */
